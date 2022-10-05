@@ -8,13 +8,7 @@ namespace WeekChgkSPBParser.API
     {
         public async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken ct)
         {
-            if (update.Type != UpdateType.Message)
-                return;
-            var message = update?.Message;
-            if (message?.Text == null)
-                return;
-            
-            
+            return;
         }
     }
 }
