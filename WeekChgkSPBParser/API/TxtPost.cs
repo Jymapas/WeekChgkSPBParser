@@ -2,7 +2,13 @@
 {
     internal class TxtPost
     {
-        internal string Anounce()
+        string anounce = GetAnounce();
+        public string Anounce 
+        {
+            get => anounce;
+            set => anounce = GetAnounce();
+        }
+        private static string GetAnounce()
         {
             FileInfo file = new(Constants.Path);
             using (StreamReader streamReader = file.OpenText())

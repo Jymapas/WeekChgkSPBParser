@@ -6,7 +6,8 @@ namespace WeekChgkSPBParser
     {
         static void Main(string[] args)
         {
-
+            Connect connect = new();
+            connect.Start();
         }
     }
 }

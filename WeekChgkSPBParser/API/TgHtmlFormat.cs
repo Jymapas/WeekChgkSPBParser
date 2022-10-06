@@ -29,7 +29,7 @@ namespace WeekChgkSPBParser.API
                 sb.Append(c);
                 if ((indexOfB == 0) && (c == 'b'))
                 {
-                    indexOfB = sb.Length - 1;
+                    indexOfB = sb.Length - 3;
                 }
             }
             sb.Remove(0, indexOfB)

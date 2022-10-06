@@ -8,13 +8,13 @@ namespace WeekChgkSPBParser.API
         internal ITelegramBotClient Bot = new TelegramBotClient(Constants.TgToken);
         private MessagesHandler _messagesHandler = new();
 
-        internal void Start()
+        internal async void Start()
         {
-            CancellationTokenSource cts = new();
+            using CancellationTokenSource cts = new();
             var cancellationToken = cts.Token;
             var receiverOptions = new ReceiverOptions
             {
-                AllowedUpdates = { },
+                AllowedUpdates = { }
             };
 
             Bot.StartReceiving(
@@ -23,6 +23,8 @@ namespace WeekChgkSPBParser.API
                 receiverOptions,
                 cancellationToken
             );
+
+            Console.ReadLine();
         }
     }
 }
