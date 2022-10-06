@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace WeekChgkSPBParser.API
+﻿namespace WeekChgkSPBParser.API
 {
     internal class TxtPost
     {
         internal string Anounce()
         {
-            FileInfo file = new(Constants.path);
+            FileInfo file = new(Constants.Path);
             using (StreamReader streamReader = file.OpenText())
             {
-                return streamReader.ReadToEnd();
+                TgHtmlFormat t = new(streamReader);
+                return t.Announcement;
             }
         }
     }
