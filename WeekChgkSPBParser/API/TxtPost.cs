@@ -2,20 +2,18 @@
 {
     internal class TxtPost
     {
-        string anounce = GetAnounce();
+        private string _anounce = GetAnounce();
         public string Anounce 
         {
-            get => anounce;
-            set => anounce = GetAnounce();
+            get => _anounce;
+            private set => _anounce = GetAnounce();
         }
         private static string GetAnounce()
         {
             FileInfo file = new(Constants.Path);
-            using (StreamReader streamReader = file.OpenText())
-            {
-                TgHtmlFormat t = new(streamReader);
-                return t.Announcement;
-            }
+            using StreamReader streamReader = file.OpenText();
+            TgHtmlFormat t = new(streamReader);
+            return t.Announcement;
         }
     }
 }

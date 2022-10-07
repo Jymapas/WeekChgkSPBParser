@@ -1,35 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 
 namespace WeekChgkSPBParser.API
 {
     internal class TgHtmlFormat
     {
-        string announcement;
-        public string Announcement
-        {
-            get => announcement;
-        }
+        private string _announcement;
+        private char[] _rawArray;
+
         public TgHtmlFormat(StreamReader sr)
         {
-            announcement = TgFormat(sr);
+            _announcement = TgFormat(sr);
         }
-        static char[]? rawArray;
-        internal static string TgFormat(StreamReader sr)
+
+        public string Announcement
+        {
+            get => _announcement;
+        }
+
+        internal string TgFormat(StreamReader sr)
         {
             StringBuilder sb = new();
             int indexOfB = 0;
-            rawArray = new char[sr.BaseStream.Length];
-            sr.Read(rawArray, 0, (int)sr.BaseStream.Length);
-            foreach (char c in rawArray)
+            _rawArray = new char[sr.BaseStream.Length];
+            sr.Read(_rawArray, 0, (int)sr.BaseStream.Length);
+            foreach (char c in _rawArray)
             {
                 sb.Append(c);
                 if ((indexOfB == 0) && (c == 'b'))
                 {
-                    indexOfB = sb.Length - 3;
+                    indexOfB = sb.Length - 1;
                 }
             }
             sb.Remove(0, indexOfB)

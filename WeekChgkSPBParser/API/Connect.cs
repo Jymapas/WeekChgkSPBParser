@@ -3,7 +3,7 @@ using Telegram.Bot.Extensions.Polling;
 
 namespace WeekChgkSPBParser.API
 {
-    internal class Connect
+    public class Connect
     {
         internal ITelegramBotClient Bot = new TelegramBotClient(Constants.TgToken);
         private MessagesHandler _messagesHandler = new();

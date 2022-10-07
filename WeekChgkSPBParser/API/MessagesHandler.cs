@@ -8,16 +8,15 @@ namespace WeekChgkSPBParser.API
     {
         public async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken ct)
         {
-            if (update.Type != UpdateType.Message) return;
-            if (update.Message!.Type != MessageType.Text) return;
+            if ((update.Type != UpdateType.Message) || (update.Message!.Type != MessageType.Text)) return;
             var message = update?.Message;
-            TxtPost _txtPost = new();
-            Console.WriteLine(_txtPost.Anounce);
-            if (_txtPost.Anounce != null)
+            TxtPost txtPost = new();
+            Console.WriteLine(txtPost.Anounce);
+            if (txtPost.Anounce != null)
             {
                 Message sentMessage = await botClient.SendTextMessageAsync(
-                    chatId: -635211124,
-                    text: _txtPost.Anounce,
+                    chatId: Constants.ChatId,
+                    text: txtPost.Anounce,
                     cancellationToken: ct,
                     parseMode: ParseMode.Html
                     );
