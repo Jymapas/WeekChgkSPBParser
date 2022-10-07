@@ -1,28 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text;
 
 namespace WeekChgkSPBParser.API
 {
     internal class TgHtmlFormat
     {
         private string _announcement;
-        private char[]? rawArray;
+        public string Announcement { get; }
 
         public TgHtmlFormat(StreamReader sr)
         {
             _announcement = TgFormat(sr);
         }
 
-        public string Announcement
-        {
-            get => _announcement;
-        }
-
         internal string TgFormat(StreamReader sr)
-        {
+        {   char[] rawArray;
             StringBuilder sb = new();
             int indexOfB = 0;
             rawArray = new char[sr.BaseStream.Length];
