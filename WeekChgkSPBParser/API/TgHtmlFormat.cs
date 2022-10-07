@@ -8,17 +8,20 @@ namespace WeekChgkSPBParser.API
 {
     internal class TgHtmlFormat
     {
-        string announcement;
-        public string Announcement
-        {
-            get => announcement;
-        }
+        private string _announcement;
+        private char[]? rawArray;
+
         public TgHtmlFormat(StreamReader sr)
         {
-            announcement = TgFormat(sr);
+            _announcement = TgFormat(sr);
         }
-        static char[]? rawArray;
-        internal static string TgFormat(StreamReader sr)
+
+        public string Announcement
+        {
+            get => _announcement;
+        }
+
+        internal string TgFormat(StreamReader sr)
         {
             StringBuilder sb = new();
             int indexOfB = 0;
