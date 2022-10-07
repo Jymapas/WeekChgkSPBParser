@@ -5,25 +5,21 @@ namespace WeekChgkSPBParser.API
     internal class TgHtmlFormat
     {
         private string _announcement;
-        private char[] _rawArray;
+        public string Announcement { get; }
 
         public TgHtmlFormat(StreamReader sr)
         {
             _announcement = TgFormat(sr);
         }
 
-        public string Announcement
-        {
-            get => _announcement;
-        }
-
         internal string TgFormat(StreamReader sr)
         {
+            char[] rawArray;
             StringBuilder sb = new();
             int indexOfB = 0;
-            _rawArray = new char[sr.BaseStream.Length];
-            sr.Read(_rawArray, 0, (int)sr.BaseStream.Length);
-            foreach (char c in _rawArray)
+            rawArray = new char[sr.BaseStream.Length];
+            sr.Read(rawArray, 0, (int)sr.BaseStream.Length);
+            foreach (char c in rawArray)
             {
                 sb.Append(c);
                 if ((indexOfB == 0) && (c == 'b'))

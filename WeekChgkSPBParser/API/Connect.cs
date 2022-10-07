@@ -5,10 +5,10 @@ namespace WeekChgkSPBParser.API
 {
     public class Connect
     {
-        internal ITelegramBotClient Bot = new TelegramBotClient(Constants.TgToken);
+        private ITelegramBotClient Bot = new TelegramBotClient(Constants.TgToken);
         private MessagesHandler _messagesHandler = new();
 
-        internal async void Start()
+        internal void Start()
         {
             using CancellationTokenSource cts = new();
             var cancellationToken = cts.Token;
