@@ -13,7 +13,8 @@ namespace WeekChgkSPBParser.API
         }
 
         internal string TgFormat(StreamReader sr)
-        {   char[] rawArray;
+        {
+            char[] rawArray;
             StringBuilder sb = new();
             int indexOfB = 0;
             rawArray = new char[sr.BaseStream.Length];
