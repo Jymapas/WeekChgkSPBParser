@@ -10,4 +10,5 @@ namespace WeekChgkSPBParser.API
             Match m = Regex.Match(s, @"(?<=(\n|<br\s?/?>))^[<b>][\w\W]+?(?=</p>)", RegexOptions.Multiline);
             Announcement = $"{Constants.TgHead}\n\n{m.Value}";
         }
+    }
 }
