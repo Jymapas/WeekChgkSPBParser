@@ -1,36 +1,14 @@
-﻿using System.Text;
+﻿using System.Text.RegularExpressions;
 
 namespace WeekChgkSPBParser.API
 {
     internal class TgHtmlFormat
     {
-        private string _announcement;
-        public string Announcement { get; }
-
-        public TgHtmlFormat(StreamReader sr)
+        public string Announcement { get; private set; }
+        internal TgHtmlFormat(string s)
         {
-            _announcement = TgFormat(sr);
-        }
-
-        internal string TgFormat(StreamReader sr)
-        {
-            char[] rawArray;
-            StringBuilder sb = new();
-            int indexOfB = 0;
-            rawArray = new char[sr.BaseStream.Length];
-            sr.Read(rawArray, 0, (int)sr.BaseStream.Length);
-            foreach (char c in rawArray)
-            {
-                sb.Append(c);
-                if ((indexOfB == 0) && (c == 'b'))
-                {
-                    indexOfB = sb.Length - 1;
-                }
-            }
-            sb.Remove(0, indexOfB)
-                .Replace(@"</p>", "")
-                .Insert(0, Constants.TgHead);
-            return sb.ToString();
+            Match m = Regex.Match(s, @"(?<=(\n|<br\s?/?>))^[<b>][\w\W]+?(?=</p>)", RegexOptions.Multiline);
+            Announcement = $"{Constants.TgHead}\n\n{m.Value}";
         }
     }
 }

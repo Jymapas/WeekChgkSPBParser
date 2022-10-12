@@ -11,14 +11,14 @@ namespace WeekChgkSPBParser.API
             if ((update.Type != UpdateType.Message) || (update.Message!.Type != MessageType.Text)) return;
             var message = update?.Message;
             string txtPost = TxtPostReader.GetAnnounce(Constants.TxtAnnouncePath);
-            Console.WriteLine(txtPost);
             if (txtPost != null)
             {
                 Message sentMessage = await botClient.SendTextMessageAsync(
                     chatId: Constants.ChatId,
                     text: txtPost,
-                    cancellationToken: ct,
-                    parseMode: ParseMode.Html
+                    parseMode: ParseMode.Html,
+                    disableWebPagePreview: true,
+                    cancellationToken: ct
                     );
             }
         }
