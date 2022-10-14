@@ -5,10 +5,10 @@ namespace WeekChgkSPBParser.API
     internal class TgHtmlFormat
     {
         public string Announcement { get; private set; }
-        internal TgHtmlFormat(string s)
+        internal TgHtmlFormat(string inputString)
         {
-            Match m = Regex.Match(s, @"(?<=(\n|<br\s?/?>))^[<b>][\w\W]+?(?=</p>)", RegexOptions.Multiline);
-            Announcement = $"{Constants.TgHead}\n\n{m.Value}";
+            var match = Regex.Match(inputString, Constants.RegexPattern, RegexOptions.Multiline);
+            Announcement = $"{Constants.TgHead}\n\n{match.Value}";
         }
     }
 }
