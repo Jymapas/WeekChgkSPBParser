@@ -4,7 +4,7 @@ namespace WeekChgkSPBParser.API
 {
     internal class Announcement
     {
-        public string Text { get; private set; }
+        public string Text { get; }
         internal Announcement(string inputString)
         {
             var match = Regex.Match(inputString, Constants.RegexPattern, RegexOptions.Multiline);
