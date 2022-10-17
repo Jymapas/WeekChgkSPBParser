@@ -24,7 +24,7 @@ namespace WeekChgkSPBParser.API
             {
                 AllowedUpdates = { }
             };
-            
+
             bot.StartReceiving(
                 _messagesHandler.HandleUpdateAsync,
                 _messagesHandler.HandleErrorAsync,
