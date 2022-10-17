@@ -5,31 +5,32 @@ namespace WeekChgkSPBParser.API
 {
     public class Connect
     {
-        private ITelegramBotClient _bot = new TelegramBotClient(GetFromTxtHelper.GetFromTxt(Constants.TgTokenPath));
+        private string _botToken;
         private MessagesHandler _messagesHandler = new();
 
         internal void Start()
         {
-            if (!string.Empty.Equals(GetFromTxtHelper.GetFromTxt(Constants.TgTokenPath)))
+            _botToken = GetFromTxtHelper.GetFromTxt(Constants.TgTokenPath);
+            if (_botToken.Equals(string.Empty))
             {
-                using CancellationTokenSource cts = new();
-                var cancellationToken = cts.Token;
-                var receiverOptions = new ReceiverOptions
-                {
-                    AllowedUpdates = { }
-                };
-
-                _bot.StartReceiving(
-                    _messagesHandler.HandleUpdateAsync,
-                    _messagesHandler.HandleErrorAsync,
-                    receiverOptions,
-                    cancellationToken
-                );
-            }
-            else
                 Console.WriteLine("Tg Token is empty!");
+                return;
+            }
 
-            Console.ReadLine();
+            ITelegramBotClient bot = new TelegramBotClient(_botToken);
+            using CancellationTokenSource cts = new();
+            var cancellationToken = cts.Token;
+            var receiverOptions = new ReceiverOptions
+            {
+                AllowedUpdates = { }
+            };
+
+            bot.StartReceiving(
+                _messagesHandler.HandleUpdateAsync,
+                _messagesHandler.HandleErrorAsync,
+                receiverOptions,
+                cancellationToken
+                );
         }
     }
 }

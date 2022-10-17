@@ -4,8 +4,9 @@
     {
         public static string GetAnnounce(string path)
         {
-            TgHtmlFormat announcementText = new(GetFromTxtHelper.GetFromTxt(Constants.TxtAnnouncePath));
-            return announcementText.Announcement;
+            var txt = GetFromTxtHelper.GetFromTxt(path);
+            Announcement announcement = new(txt);
+            return announcement.Text;
         }
     }
 }
