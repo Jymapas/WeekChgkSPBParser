@@ -1,6 +1,4 @@
-﻿using System.Net;
-
-namespace WeekChgkSPBParser.API
+﻿namespace WeekChgkSPBParser.API
 {
     internal class LjPost
     {

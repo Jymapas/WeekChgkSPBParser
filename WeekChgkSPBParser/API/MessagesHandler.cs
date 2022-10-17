@@ -8,7 +8,19 @@ namespace WeekChgkSPBParser.API
     {
         public async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken ct)
         {
-            return;
+            if ((update.Type != UpdateType.Message) || (update.Message!.Type != MessageType.Text)) return;
+            var message = update?.Message;
+            string txtPost = TxtPostReader.GetAnnounce(Constants.TxtAnnouncePath);
+            if (txtPost != null)
+            {
+                Message sentMessage = await botClient.SendTextMessageAsync(
+                    chatId: Constants.ChatId,
+                    text: txtPost,
+                    parseMode: ParseMode.Html,
+                    disableWebPagePreview: true,
+                    cancellationToken: ct
+                    );
+            }
         }
         public async Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
         {
