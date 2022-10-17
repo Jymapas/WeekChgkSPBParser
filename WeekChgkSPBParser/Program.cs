@@ -8,6 +8,7 @@ namespace WeekChgkSPBParser
         {
             Connect connect = new();
             connect.Start();
+            Console.ReadLine();
         }
     }
 }

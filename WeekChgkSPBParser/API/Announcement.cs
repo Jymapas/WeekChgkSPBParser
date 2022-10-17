@@ -2,13 +2,13 @@
 
 namespace WeekChgkSPBParser.API
 {
-    internal class TgHtmlFormat
+    internal class Announcement
     {
-        public string Announcement { get; private set; }
-        internal TgHtmlFormat(string inputString)
+        public string Text { get; }
+        internal Announcement(string inputString)
         {
             var match = Regex.Match(inputString, Constants.RegexPattern, RegexOptions.Multiline);
-            Announcement = $"{Constants.TgHead}\n\n{match.Value}";
+            Text = $"{Constants.TgHead}\n\n{match.Value}";
         }
     }
 }
