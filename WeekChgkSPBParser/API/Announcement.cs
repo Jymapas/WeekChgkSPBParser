@@ -1,4 +1,5 @@
 ﻿using System.Text.RegularExpressions;
+using WeekChgkSPBParser.Constants;
 
 namespace WeekChgkSPBParser.API
 {
@@ -7,8 +8,8 @@ namespace WeekChgkSPBParser.API
         public string Text { get; }
         internal Announcement(string inputString)
         {
-            var match = Regex.Match(inputString, Constants.RegexPattern, RegexOptions.Multiline);
-            Text = $"{Constants.TgHead}\n\n{match.Value}";
+            var match = Regex.Match(inputString, ServiceLines.RegexPattern, RegexOptions.Multiline);
+            Text = $"{ServiceLines.TgHead}\n\n{match.Value}";
         }
     }
 }

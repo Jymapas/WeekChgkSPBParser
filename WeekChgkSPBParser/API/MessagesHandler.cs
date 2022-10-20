@@ -1,6 +1,7 @@
 ﻿using Telegram.Bot;
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
+using WeekChgkSPBParser.Constants;
 
 namespace WeekChgkSPBParser.API
 {
@@ -10,11 +11,11 @@ namespace WeekChgkSPBParser.API
         {
             if ((update.Type != UpdateType.Message) || (update.Message!.Type != MessageType.Text)) return;
             var message = update?.Message;
-            string txtPost = TxtPostReader.GetAnnounce(Constants.TxtAnnouncePath);
+            string txtPost = TxtPostReader.GetAnnounce(Paths.TxtAnnounce);
             if (txtPost != null)
             {
                 Message sentMessage = await botClient.SendTextMessageAsync(
-                    chatId: Constants.ChatId,
+                    chatId: Id.Chat,
                     text: txtPost,
                     parseMode: ParseMode.Html,
                     disableWebPagePreview: true,

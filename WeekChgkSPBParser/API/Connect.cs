@@ -1,5 +1,6 @@
 ﻿using Telegram.Bot;
 using Telegram.Bot.Extensions.Polling;
+using WeekChgkSPBParser.Constants;
 
 namespace WeekChgkSPBParser.API
 {
@@ -10,7 +11,7 @@ namespace WeekChgkSPBParser.API
 
         internal void Start()
         {
-            _botToken = GetFromTxtHelper.GetFromTxt(Constants.TgTokenPath);
+            _botToken = GetFromTxtHelper.GetFromTxt(Paths.TgToken);
             if (_botToken.Equals(string.Empty))
             {
                 Console.WriteLine("Tg Token is empty!");
