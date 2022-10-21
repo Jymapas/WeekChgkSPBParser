@@ -6,18 +6,19 @@ namespace WeekChgkSPBParser.Constants
     {
         internal const int Chat = -635211124;
         internal const string Channel = "@sapamyJ";
-        private static List<int> Admins
+        internal static List<long> Admins
         {
             get
             {
                 string allText = GetFromTxtHelper.GetFromTxt(Paths.AdminIds);
+                List<long> ids = new();
                 foreach (string line in allText.Split(Environment.NewLine))
                 {
-                    int.TryParse(line, out int id);
+                    long.TryParse(line, out long id);
                     if (id != 0)
-                        Admins.Add(id);
+                        ids.Add(id);
                 }
-                return Admins;
+                return ids;
             }
         }
     }

@@ -11,7 +11,19 @@ namespace WeekChgkSPBParser.API
         {
             if ((update.Type != UpdateType.Message) || (update.Message!.Type != MessageType.Text)) return;
             var message = update?.Message;
+
+            if (!Id.Admins.Contains(message.From.Id))
+            {
+                Message sentWarningMessage = await botClient.SendTextMessageAsync(
+                    chatId: message.Chat.Id,
+                    text: ServiceLines.WarningMessage,
+                    cancellationToken: ct
+                    );
+                return;
+            }
+
             string txtPost = TxtPostReader.GetAnnounce(Paths.TxtAnnounce);
+
             if (txtPost != null)
             {
                 Message sentMessage = await botClient.SendTextMessageAsync(
