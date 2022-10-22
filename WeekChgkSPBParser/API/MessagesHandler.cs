@@ -52,17 +52,6 @@ namespace WeekChgkSPBParser.API
                         );
                     return;
             }
-
-            if (txtPost != null)
-            {
-                Message sentMessage = await botClient.SendTextMessageAsync(
-                    chatId: Id.Chat,
-                    text: txtPost,
-                    parseMode: ParseMode.Html,
-                    disableWebPagePreview: true,
-                    cancellationToken: ct
-                    );
-            }
         }
         public async Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
         {
