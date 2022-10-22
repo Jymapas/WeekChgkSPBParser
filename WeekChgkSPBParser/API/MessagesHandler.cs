@@ -14,7 +14,7 @@ namespace WeekChgkSPBParser.API
 
             if (!Id.Admins.Contains(message.From.Id))
             {
-                Message sentWarningMessage = await botClient.SendTextMessageAsync(
+                await botClient.SendTextMessageAsync(
                     chatId: message.Chat.Id,
                     text: ServiceLines.WarningMessage,
                     cancellationToken: ct
@@ -23,6 +23,35 @@ namespace WeekChgkSPBParser.API
             }
 
             string txtPost = TxtPostReader.GetAnnounce(Paths.TxtAnnounce);
+
+            switch (message.Text)
+            {
+                case Commands.announcementFromTxt:
+                    await botClient.SendTextMessageAsync(
+                        chatId: Id.Chat,
+                        text: txtPost,
+                        parseMode: ParseMode.Html,
+                        disableWebPagePreview: true,
+                        cancellationToken: ct
+                        );
+                    return;
+                case Commands.announcementFromTxtToChannel:
+                    await botClient.SendTextMessageAsync(
+                        chatId: Id.Channel,
+                        text: txtPost,
+                        parseMode: ParseMode.Html,
+                        disableWebPagePreview: true,
+                        cancellationToken: ct
+                        );
+                    return;
+                default:
+                    await botClient.SendTextMessageAsync(
+                        chatId: message.Chat.Id,
+                        text: ServiceLines.UnknownСommand,
+                        cancellationToken: ct
+                        );
+                    return;
+            }
 
             if (txtPost != null)
             {
