@@ -2,17 +2,19 @@
 using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using WeekChgkSPBParser.Constants;
+using WeekChgkSPBParser.Helpers;
 
 namespace WeekChgkSPBParser.API
 {
     internal class MessagesHandler
     {
+        private readonly List<long> _ids = AdminListHelper.Ids();
         public async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken ct)
         {
             if ((update.Type != UpdateType.Message) || (update.Message!.Type != MessageType.Text)) return;
             var message = update?.Message;
 
-            if (!Id.Admins.Contains(message.From.Id))
+            if (!_ids.Contains(message.From.Id))
             {
                 await botClient.SendTextMessageAsync(
                     chatId: message.Chat.Id,
@@ -26,7 +28,7 @@ namespace WeekChgkSPBParser.API
 
             switch (message.Text)
             {
-                case Commands.announcementFromTxt:
+                case Commands.announcement:
                     await botClient.SendTextMessageAsync(
                         chatId: Id.Chat,
                         text: txtPost,
@@ -35,7 +37,7 @@ namespace WeekChgkSPBParser.API
                         cancellationToken: ct
                         );
                     return;
-                case Commands.announcementFromTxtToChannel:
+                case Commands.announcementToChannel:
                     await botClient.SendTextMessageAsync(
                         chatId: Id.Channel,
                         text: txtPost,

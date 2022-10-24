@@ -1,4 +1,6 @@
-﻿namespace WeekChgkSPBParser.API
+﻿using WeekChgkSPBParser.Helpers;
+
+namespace WeekChgkSPBParser.API
 {
     public class TxtPostReader
     {
