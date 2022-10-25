@@ -2,9 +2,11 @@
 {
     internal record class Commands
     {
-        internal const string announcement = "/announcement";
-        internal const string announcementToChannel = "/announcementToChannel";
-        internal const string announcementFromLj = "/announcementFromLj";
-        internal const string announcementFromLjToChannel = "/announcementFromLjToChannel";
+        internal const string Announcement = "/announcement";
+        internal const string AnnouncementToChannel = "/announcementtochannel";
+        internal const string AnnouncementFromLj = "/announcementfromlj";
+        internal const string AnnouncementFromLjToChannel = "/announcementfromljtochannel";
+
+        internal static List<string> LjCommands = new() { AnnouncementFromLj, AnnouncementFromLjToChannel };
     }
 }
