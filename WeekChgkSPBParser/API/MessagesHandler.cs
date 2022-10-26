@@ -3,6 +3,7 @@ using Telegram.Bot.Types;
 using Telegram.Bot.Types.Enums;
 using WeekChgkSPBParser.Constants;
 using WeekChgkSPBParser.Helpers;
+using WeekChgkSPBParser.Readers;
 
 namespace WeekChgkSPBParser.API
 {
@@ -15,8 +16,11 @@ namespace WeekChgkSPBParser.API
         private string _txtPost;
         public async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
         {
+            _botClient = botClient;
+            _cancellationToken = cancellationToken;
             if ((update.Type != UpdateType.Message) || (update.Message!.Type != MessageType.Text)) return;
             var message = update?.Message;
+            _messageText = message.Text.ToLower();
 
             if (!_adminsIds.Contains(message.From.Id))
             {
@@ -24,9 +28,21 @@ namespace WeekChgkSPBParser.API
                 return;
             }
 
-            string txtPost = TxtPostReader.GetAnnounce(Paths.TxtAnnounce);
+            if (Commands.LjCommands.Contains(_messageText))
+            {
+                _txtPost = LjPostReader.GetAnnounce(Paths.LJUrl);
+                if (_txtPost.Equals(string.Empty))
+                {
+                    await SendMessage(message.Chat.Id, ServiceLines.EmptyAnnouncementWarning);
+                    return;
+                }
+            }
+            else
+            {
+                _txtPost = TxtPostReader.GetAnnounce(Paths.TxtAnnounce);
+            }
 
-            switch (message.Text)
+            switch (_messageText)
             {
                 case Commands.Announcement:
                 case Commands.AnnouncementFromLj:
@@ -41,9 +57,40 @@ namespace WeekChgkSPBParser.API
                     return;
             }
         }
+
         public async Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
         {
             Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(exception));
+        }
+        /// <summary>
+        /// Отправка сообщений ботом
+        /// </summary>
+        /// <param name="id">Id пользователя или чата, куда будет отправлено сообщение</param>
+        /// <param name="text">Текст сообщения в HTML формате</param>
+        private async Task SendMessage(long id, string text)
+        {
+            await _botClient.SendTextMessageAsync(
+                chatId: id,
+                text: text,
+                parseMode: ParseMode.Html,
+                disableWebPagePreview: true,
+                cancellationToken: _cancellationToken
+                );
+        }
+        /// <summary>
+        /// Отправка сообщений ботом
+        /// </summary>
+        /// <param name="id">Id канала (в формате "@chanelLink", куда будет отправлено сообщение</param>
+        /// <param name="text">Текст сообщения в HTML формате</param>
+        private async Task SendMessage(string id, string text)
+        {
+            await _botClient.SendTextMessageAsync(
+                chatId: id,
+                text: text,
+                parseMode: ParseMode.Html,
+                disableWebPagePreview: true,
+                cancellationToken: _cancellationToken
+                );
         }
     }
 }
