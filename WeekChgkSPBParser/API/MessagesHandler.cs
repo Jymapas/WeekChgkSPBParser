@@ -38,6 +38,7 @@ namespace WeekChgkSPBParser.API
                     return;
                 default:
                     await SendMessage(message.Chat.Id, ServiceLines.UnknownСommand);
+                    return;
             }
         }
         public async Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
