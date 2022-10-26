@@ -13,7 +13,7 @@ namespace WeekChgkSPBParser.API
         private CancellationToken _cancellationToken;
         private string _messageText;
         private string _txtPost;
-        public async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken ct)
+        public async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
         {
             if ((update.Type != UpdateType.Message) || (update.Message!.Type != MessageType.Text)) return;
             var message = update?.Message;
@@ -23,7 +23,7 @@ namespace WeekChgkSPBParser.API
                 await botClient.SendTextMessageAsync(
                     chatId: message.Chat.Id,
                     text: ServiceLines.WarningMessage,
-                    cancellationToken: ct
+                    cancellationToken: cancellationToken
                     );
                 return;
             }
@@ -38,7 +38,7 @@ namespace WeekChgkSPBParser.API
                         text: txtPost,
                         parseMode: ParseMode.Html,
                         disableWebPagePreview: true,
-                        cancellationToken: ct
+                        cancellationToken: cancellationToken
                         );
                     return;
                 case Commands.announcementToChannel:
@@ -47,14 +47,14 @@ namespace WeekChgkSPBParser.API
                         text: txtPost,
                         parseMode: ParseMode.Html,
                         disableWebPagePreview: true,
-                        cancellationToken: ct
+                        cancellationToken: cancellationToken
                         );
                     return;
                 default:
                     await botClient.SendTextMessageAsync(
                         chatId: message.Chat.Id,
                         text: ServiceLines.UnknownСommand,
-                        cancellationToken: ct
+                        cancellationToken: cancellationToken
                         );
                     return;
             }
