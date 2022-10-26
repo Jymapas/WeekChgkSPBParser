@@ -9,6 +9,10 @@ namespace WeekChgkSPBParser.API
     internal class MessagesHandler
     {
         private readonly List<long> _adminsIds = AdminListHelper.GetIds();
+        private ITelegramBotClient _botClient;
+        private CancellationToken _cancellationToken;
+        private string _messageText;
+        private string _txtPost;
         public async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken ct)
         {
             if ((update.Type != UpdateType.Message) || (update.Message!.Type != MessageType.Text)) return;
