@@ -20,11 +20,7 @@ namespace WeekChgkSPBParser.API
 
             if (!_adminsIds.Contains(message.From.Id))
             {
-                await botClient.SendTextMessageAsync(
-                    chatId: message.Chat.Id,
-                    text: ServiceLines.WarningMessage,
-                    cancellationToken: cancellationToken
-                    );
+                await SendMessage(message.Chat.Id, ServiceLines.WarningMessage);
                 return;
             }
 
@@ -32,31 +28,16 @@ namespace WeekChgkSPBParser.API
 
             switch (message.Text)
             {
-                case Commands.announcement:
-                    await botClient.SendTextMessageAsync(
-                        chatId: Id.Chat,
-                        text: txtPost,
-                        parseMode: ParseMode.Html,
-                        disableWebPagePreview: true,
-                        cancellationToken: cancellationToken
-                        );
+                case Commands.Announcement:
+                case Commands.AnnouncementFromLj:
+                    await SendMessage(message.Chat.Id, _txtPost);
                     return;
-                case Commands.announcementToChannel:
-                    await botClient.SendTextMessageAsync(
-                        chatId: Id.Channel,
-                        text: txtPost,
-                        parseMode: ParseMode.Html,
-                        disableWebPagePreview: true,
-                        cancellationToken: cancellationToken
-                        );
+                case Commands.AnnouncementToChannel:
+                case Commands.AnnouncementFromLjToChannel:
+                    await SendMessage(Id.Channel, _txtPost);
                     return;
                 default:
-                    await botClient.SendTextMessageAsync(
-                        chatId: message.Chat.Id,
-                        text: ServiceLines.UnknownСommand,
-                        cancellationToken: cancellationToken
-                        );
-                    return;
+                    await SendMessage(message.Chat.Id, ServiceLines.UnknownСommand);
             }
         }
         public async Task HandleErrorAsync(ITelegramBotClient botClient, Exception exception, CancellationToken cancellationToken)
