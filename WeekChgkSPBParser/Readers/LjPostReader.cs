@@ -1,6 +1,7 @@
 ﻿using WeekChgkSPBParser.API;
 using WeekChgkSPBParser.Constants;
 using System.Text.RegularExpressions;
+using System.Net;
 
 namespace WeekChgkSPBParser.Readers
 {
@@ -28,9 +29,7 @@ namespace WeekChgkSPBParser.Readers
             using HttpClient client = new();
             try
             {
-                HttpResponseMessage responseMessage = client.GetAsync(url).Result;
-                HttpContent content = responseMessage.Content;
-                string source = content.ReadAsStringAsync().Result;
+                string source = client.GetStringAsync(url).Result;
                 return CutAnnounce(source);
             }
             catch
@@ -44,8 +43,8 @@ namespace WeekChgkSPBParser.Readers
         /// <param name="source">Полный HTML-код страницы</param>
         private static string CutAnnounce(string source)
         {
-            var match = Regex.Matches(source, ServiceLines.CutSourcePattern)[0];
-            return Regex.Replace(match.Value, @"<br.*?>", "");
+            var match = Regex.Matches(source, ServiceLines.CutSourcePattern, RegexOptions.Multiline)[0];
+            return Regex.Replace(match.Value, @"<br.*?>", "", RegexOptions.Multiline);
 
         }
     }
