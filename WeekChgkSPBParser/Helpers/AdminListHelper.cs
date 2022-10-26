@@ -5,11 +5,11 @@ namespace WeekChgkSPBParser.Helpers
     internal class AdminListHelper
     {
         /// <summary>
-        /// Возвращает из файл List of long со списком ID админов
+        /// Возвращает из файла List of long со списком ID админов
         /// </summary>
         /// <param name="path">Путь к файлу</param>
-        /// <returns></returns>
-        public static List<long> Ids(string path = Paths.AdminIds)
+        /// <returns>List of long со списком ID админов</returns>
+        public static List<long> GetIds(string path = Paths.AdminIds)
         {
             string allText = GetFromTxtHelper.GetFromTxt(path);
             List<long> ids = new();

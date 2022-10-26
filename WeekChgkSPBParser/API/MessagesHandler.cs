@@ -9,7 +9,7 @@ namespace WeekChgkSPBParser.API
 {
     internal class MessagesHandler
     {
-        private readonly List<long> _ids = AdminListHelper.Ids();
+        private readonly List<long> _adminsIds = AdminListHelper.GetIds();
         private ITelegramBotClient _botClient;
         private CancellationToken _cancellationToken;
         private string _messageText;
@@ -22,22 +22,18 @@ namespace WeekChgkSPBParser.API
             var message = update?.Message;
             _messageText = message.Text.ToLower();
 
-            if (!_ids.Contains(message.From.Id))
+            if (!_adminsIds.Contains(message.From.Id))
             {
-                await botClient.SendTextMessageAsync(
-                    chatId: message.Chat.Id,
-                    text: ServiceLines.WarningMessage,
-                    cancellationToken: cancellationToken
-                    );
+                await SendMessage(message.Chat.Id, ServiceLines.WarningMessage);
                 return;
             }
 
             if (Commands.LjCommands.Contains(_messageText))
             {
                 _txtPost = LjPostReader.GetAnnounce(Paths.LJUrl);
-                if (_txtPost.Equals(ServiceLines.TgHead))
+                if (_txtPost.Equals(string.Empty))
                 {
-                    await SendMessage(message.Chat.Id, ServiceLines.SiteIsBlocked);
+                    await SendMessage(message.Chat.Id, ServiceLines.EmptyAnnouncementWarning);
                     return;
                 }
             }
