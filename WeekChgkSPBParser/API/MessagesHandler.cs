@@ -15,7 +15,6 @@ namespace WeekChgkSPBParser.API
         private readonly List<long> _adminsIds = AdminListHelper.GetIds();
         private ITelegramBotClient _botClient;
         private CancellationToken _cancellationToken;
-        private string _txtPost;
 
         public async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
         {
@@ -35,9 +34,9 @@ namespace WeekChgkSPBParser.API
                 ? new LjPostReader()
                 : new TxtPostReader();
 
-            _txtPost = reader.GetAnnounce();
+            string txtPost = reader.GetAnnounce();
 
-            if (_txtPost.Equals(string.Empty))
+            if (txtPost.Equals(string.Empty))
             {
                 await SendMessage(message.Chat.Id, ServiceLines.EmptyAnnouncementWarning);
                 return;
@@ -47,11 +46,11 @@ namespace WeekChgkSPBParser.API
             {
                 case Commands.Announcement:
                 case Commands.AnnouncementFromLj:
-                    await SendMessage(message.Chat.Id, _txtPost);
+                    await SendMessage(message.Chat.Id, txtPost);
                     return;
                 case Commands.AnnouncementToChannel:
                 case Commands.AnnouncementFromLjToChannel:
-                    await SendMessage(Id.Channel, _txtPost);
+                    await SendMessage(Id.Channel, txtPost);
                     return;
                 default:
                     await SendMessage(message.Chat.Id, ServiceLines.UnknownСommand);
