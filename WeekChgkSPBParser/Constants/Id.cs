@@ -1,6 +1,4 @@
-﻿using WeekChgkSPBParser.API;
-
-namespace WeekChgkSPBParser.Constants
+﻿namespace WeekChgkSPBParser.Constants
 {
     internal record class Id
     {

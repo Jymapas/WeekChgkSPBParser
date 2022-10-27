@@ -1,22 +1,21 @@
 ﻿using WeekChgkSPBParser.API;
 using WeekChgkSPBParser.Constants;
 using System.Text.RegularExpressions;
-using System.Net;
 
 namespace WeekChgkSPBParser.Readers
 {
     /// <summary>
     /// Текст анонса, который берётся из ЖЖ
     /// </summary>
-    internal class LjPostReader : PostReader
+    internal class LjPostReader : IPostReader
     {
         /// <summary>
         /// Возвращает анонс из ЖЖ поста по ссылке.
         /// </summary>
-        /// <param name="path">URL страницы</param>
-        public static new string GetAnnounce(string path)
+        /// <returns>Текст анонса в формате ТГ-поста</returns>
+        string IPostReader.GetAnnounce()
         {
-            var txt = GetSource(path);
+            var txt = GetSource(Paths.LJUrl);
             Announcement announcement = new(txt);
             return announcement.Text;
         }
@@ -43,7 +42,7 @@ namespace WeekChgkSPBParser.Readers
         /// <param name="source">Полный HTML-код страницы</param>
         private static string CutAnnounce(string source)
         {
-            var match = Regex.Matches(source, ServiceLines.CutSourcePattern, RegexOptions.Multiline)[0];
+            var match = Regex.Matches(source, Patterns.CutSource, RegexOptions.Multiline)[0];
             return Regex.Replace(match.Value, @"<br.*?>", "", RegexOptions.Multiline);
 
         }

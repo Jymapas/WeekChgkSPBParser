@@ -7,12 +7,14 @@ using WeekChgkSPBParser.Readers;
 
 namespace WeekChgkSPBParser.API
 {
+    /// <summary>
+    /// Обработчик сообщений боту.
+    /// </summary>
     internal class MessagesHandler
     {
         private readonly List<long> _adminsIds = AdminListHelper.GetIds();
         private ITelegramBotClient _botClient;
         private CancellationToken _cancellationToken;
-        private string _messageText;
         private string _txtPost;
 
         public async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
@@ -21,7 +23,7 @@ namespace WeekChgkSPBParser.API
             _cancellationToken = cancellationToken;
             if ((update.Type != UpdateType.Message) || (update.Message!.Type != MessageType.Text)) return;
             var message = update?.Message;
-            _messageText = message.Text.ToLower();
+            string messageText = message.Text.ToLower();
 
             if (!_adminsIds.Contains(message.From.Id))
             {
@@ -29,9 +31,11 @@ namespace WeekChgkSPBParser.API
                 return;
             }
 
-            _txtPost = (Commands.LjCommands.Contains(_messageText))
-                ? LjPostReader.GetAnnounce(Paths.LJUrl)
-                : TxtPostReader.GetAnnounce(Paths.TxtAnnounce);
+            IPostReader reader = Commands.LjCommands.Contains(messageText)
+                ? new LjPostReader()
+                : new TxtPostReader();
+
+            _txtPost = reader.GetAnnounce();
 
             if (_txtPost.Equals(string.Empty))
             {
@@ -39,7 +43,7 @@ namespace WeekChgkSPBParser.API
                 return;
             }
 
-            switch (_messageText)
+            switch (messageText)
             {
                 case Commands.Announcement:
                 case Commands.AnnouncementFromLj:

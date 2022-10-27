@@ -12,8 +12,9 @@ namespace WeekChgkSPBParser.Helpers
         public static List<long> GetIds(string path = Paths.AdminIds)
         {
             string allText = GetFromTxtHelper.GetFromTxt(path);
-            List<long> ids = new();
-            foreach (string line in allText.Split(Environment.NewLine))
+            string[] splitLines = allText.Split(Environment.NewLine);
+            List<long> ids = new(splitLines.Length);
+            foreach (string line in splitLines)
             {
                 long.TryParse(line, out long id);
                 if (id != 0)
