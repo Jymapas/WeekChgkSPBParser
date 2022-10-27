@@ -1,6 +1,7 @@
 ﻿using Telegram.Bot;
 using Telegram.Bot.Extensions.Polling;
 using WeekChgkSPBParser.Constants;
+using WeekChgkSPBParser.Helpers;
 
 namespace WeekChgkSPBParser.API
 {
@@ -9,6 +10,10 @@ namespace WeekChgkSPBParser.API
         private string _botToken;
         private MessagesHandler _messagesHandler = new();
 
+        /// <summary>
+        /// Основной метод программы.
+        /// В нём происходит инициализация бота и вызывается обработчик сообщений боту.
+        /// </summary>
         internal void Start()
         {
             _botToken = GetFromTxtHelper.GetFromTxt(Paths.TgToken);
