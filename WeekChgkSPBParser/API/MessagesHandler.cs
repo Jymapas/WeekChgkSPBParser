@@ -14,6 +14,7 @@ namespace WeekChgkSPBParser.API
         private CancellationToken _cancellationToken;
         private string _messageText;
         private string _txtPost;
+
         public async Task HandleUpdateAsync(ITelegramBotClient botClient, Update update, CancellationToken cancellationToken)
         {
             _botClient = botClient;
@@ -28,18 +29,14 @@ namespace WeekChgkSPBParser.API
                 return;
             }
 
-            if (Commands.LjCommands.Contains(_messageText))
+            _txtPost = (Commands.LjCommands.Contains(_messageText))
+                ? LjPostReader.GetAnnounce(Paths.LJUrl)
+                : TxtPostReader.GetAnnounce(Paths.TxtAnnounce);
+
+            if (_txtPost.Equals(string.Empty))
             {
-                _txtPost = LjPostReader.GetAnnounce(Paths.LJUrl);
-                if (_txtPost.Equals(string.Empty))
-                {
-                    await SendMessage(message.Chat.Id, ServiceLines.EmptyAnnouncementWarning);
-                    return;
-                }
-            }
-            else
-            {
-                _txtPost = TxtPostReader.GetAnnounce(Paths.TxtAnnounce);
+                await SendMessage(message.Chat.Id, ServiceLines.EmptyAnnouncementWarning);
+                return;
             }
 
             switch (_messageText)
