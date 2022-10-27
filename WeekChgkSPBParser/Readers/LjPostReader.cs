@@ -13,7 +13,7 @@ namespace WeekChgkSPBParser.Readers
         /// Возвращает анонс из ЖЖ поста по ссылке.
         /// </summary>
         /// <returns>Текст анонса в формате ТГ-поста</returns>
-        string IPostReader.GetAnnounce()
+        public string GetAnnounce()
         {
             var txt = GetSource(Paths.LJUrl);
             Announcement announcement = new(txt);

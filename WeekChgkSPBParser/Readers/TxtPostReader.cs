@@ -13,7 +13,7 @@ namespace WeekChgkSPBParser.Readers
         /// Возвращает текст анонса в формате ТГ-поста.
         /// </summary>
         /// <returns>Текст анонса в формате ТГ-поста</returns>
-        string IPostReader.GetAnnounce()
+        public string GetAnnounce()
         {
             var txt = GetFromTxtHelper.GetFromTxt(Paths.TxtAnnounce);
             Announcement announcement = new(txt);

@@ -3,7 +3,7 @@
     internal interface IPostReader
     {
         /// <summary>
-        /// Интерфес, который наследуют ридеры постов.
+        /// Интерфес, который реализуют ридеры постов.
         /// </summary>
         /// <returns>Текст анонса в формате ТГ-поста</returns>
         public string GetAnnounce();
