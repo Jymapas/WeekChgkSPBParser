@@ -9,7 +9,7 @@ namespace WeekChgkSPBParser.API
         internal Announcement(string inputString)
         {
             var match = Regex.Match(inputString, ServiceLines.RegexPattern, RegexOptions.Multiline);
-            Text = $"{ServiceLines.TgHead}\n\n{match.Value}";
+            Text = match.Value.Equals(string.Empty) ? string.Empty : $"{ServiceLines.TgHead}\n\n{match.Value}";
         }
     }
 }
