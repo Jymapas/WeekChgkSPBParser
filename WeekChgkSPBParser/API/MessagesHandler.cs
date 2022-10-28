@@ -22,7 +22,7 @@ namespace WeekChgkSPBParser.API
             _cancellationToken = cancellationToken;
             if ((update.Type != UpdateType.Message) || (update.Message!.Type != MessageType.Text)) return;
             var message = update?.Message;
-            string messageText = message.Text.ToLower();
+            var messageText = message.Text.ToLower();
 
             if (!_adminsIds.Contains(message.From.Id))
             {
@@ -34,7 +34,7 @@ namespace WeekChgkSPBParser.API
                 ? new LjPostReader()
                 : new TxtPostReader();
 
-            string txtPost = reader.GetAnnounce();
+            var txtPost = reader.GetAnnounce();
 
             if (txtPost.Equals(string.Empty))
             {
@@ -65,24 +65,9 @@ namespace WeekChgkSPBParser.API
         /// <summary>
         /// Отправка сообщений ботом
         /// </summary>
-        /// <param name="id">Id пользователя или чата, куда будет отправлено сообщение</param>
+        /// <param name="id">Id пользователя, чата или канала, куда будет отправлено сообщение</param>
         /// <param name="text">Текст сообщения в HTML формате</param>
-        private async Task SendMessage(long id, string text)
-        {
-            await _botClient.SendTextMessageAsync(
-                chatId: id,
-                text: text,
-                parseMode: ParseMode.Html,
-                disableWebPagePreview: true,
-                cancellationToken: _cancellationToken
-                );
-        }
-        /// <summary>
-        /// Отправка сообщений ботом
-        /// </summary>
-        /// <param name="id">Id канала (в формате "@chanelLink", куда будет отправлено сообщение</param>
-        /// <param name="text">Текст сообщения в HTML формате</param>
-        private async Task SendMessage(string id, string text)
+        private async Task SendMessage(ChatId id, string text)
         {
             await _botClient.SendTextMessageAsync(
                 chatId: id,
