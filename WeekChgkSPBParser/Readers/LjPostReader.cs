@@ -43,7 +43,7 @@ namespace WeekChgkSPBParser.Readers
         private static string CutAnnounce(string source)
         {
             var match = Regex.Matches(source, Patterns.CutSource, RegexOptions.Multiline)[0];
-            return Regex.Replace(match.Value, @"<br.*?>", "", RegexOptions.Multiline);
+            return Regex.Replace(match.Value, @"<br.*?>", "\n", RegexOptions.Multiline);
 
         }
     }
