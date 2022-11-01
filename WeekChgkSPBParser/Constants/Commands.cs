@@ -1,6 +1,6 @@
 ﻿namespace WeekChgkSPBParser.Constants
 {
-    internal record class Commands
+    internal record Commands
     {
         internal const string Announcement = "/announcement";
         internal const string AnnouncementToChannel = "/announcementtochannel";

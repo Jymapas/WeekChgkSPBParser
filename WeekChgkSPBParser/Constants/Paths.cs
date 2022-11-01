@@ -1,6 +1,6 @@
 ﻿namespace WeekChgkSPBParser.Constants
 {
-    internal record class Paths
+    internal record Paths
     {
         internal const string TxtAnnounce = @"Announcement.txt";
         internal const string TgToken = @"TgToken.txt";

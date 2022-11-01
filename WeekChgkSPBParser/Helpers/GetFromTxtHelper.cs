@@ -12,5 +12,10 @@
             using StreamReader sr = new FileInfo(path).OpenText();
             return sr.ReadToEnd();
         }
+
+        public static string[] GetLinesFromTxt(string path)
+        {
+            return File.ReadAllLines(path);
+        }
     }
 }
