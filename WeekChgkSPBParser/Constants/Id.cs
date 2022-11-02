@@ -1,6 +1,6 @@
 ﻿namespace WeekChgkSPBParser.Constants
 {
-    internal record Id
+    internal class Id
     {
         internal const string Channel = "@sapamyJ";
     }
