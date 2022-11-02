@@ -5,7 +5,7 @@ namespace WeekChgkSPBParser.API
     public class FilesExist
     {
         /// <summary>
-        /// Проверка наличия файлов "GetAnnouncement.txt", "TgToken.txt" и "IDs.txt"
+        /// Проверка наличия файлов "Announcement.txt", "TgToken.txt" и "IDs.txt"
         /// </summary>
         /// <returns>true — если все файлы есть в каталоге,
         /// false — в ином случае</returns>
