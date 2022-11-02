@@ -16,8 +16,8 @@ namespace WeekChgkSPBParser.Readers
         public string GetAnnounce()
         {
             var lines = GetFromTxtHelper.GetLinesFromTxt(Paths.TxtAnnounce);
-            Announcement announcement = new(lines);
-            return announcement.Text;
+            GetAnnouncement getAnnouncement = new(lines);
+            return getAnnouncement.Text;
         }
     }
 }
