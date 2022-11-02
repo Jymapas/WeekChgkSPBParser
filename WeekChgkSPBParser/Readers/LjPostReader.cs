@@ -16,6 +16,8 @@ namespace WeekChgkSPBParser.Readers
         public string GetAnnounce()
         {
             var txt = GetSource(Paths.LjUrl);
+            if (txt.Equals(null))
+                return string.Empty;
             Announcement announcement = new(txt);
             return announcement.Text;
         }
@@ -23,7 +25,7 @@ namespace WeekChgkSPBParser.Readers
         /// Получает полный HTML-код страницы
         /// </summary>
         /// <param name="url">URL страницы</param>
-        private static string GetSource(string url)
+        private static string[] GetSource(string url)
         {
             using HttpClient client = new();
             try
@@ -33,17 +35,17 @@ namespace WeekChgkSPBParser.Readers
             }
             catch
             {
-                return string.Empty;
+                return null;
             }
         }
         /// <summary>
         /// Возвращает текст в формате, как при HTML-редактировании анонса
         /// </summary>
         /// <param name="source">Полный HTML-код страницы</param>
-        private static string CutAnnounce(string source)
+        private static string[] CutAnnounce(string source)
         {
             var match = Regex.Matches(source, Patterns.CutSource, RegexOptions.Multiline)[0];
-            return Regex.Replace(match.Value, @"<br.*?>", "\n", RegexOptions.Multiline);
+            return Regex.Split(match.Value, @"<br.*?>", RegexOptions.Multiline);
 
         }
     }
