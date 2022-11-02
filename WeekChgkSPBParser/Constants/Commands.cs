@@ -7,6 +7,6 @@
         internal const string AnnouncementFromLj = "/announcementfromlj";
         internal const string AnnouncementFromLjToChannel = "/announcementfromljtochannel";
 
-        internal static List<string> LjCommands = new() { AnnouncementFromLj, AnnouncementFromLjToChannel };
+        internal static readonly List<string> LjCommands = new() { AnnouncementFromLj, AnnouncementFromLjToChannel };
     }
 }
