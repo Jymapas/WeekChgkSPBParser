@@ -16,7 +16,7 @@ namespace WeekChgkSPBParser.Readers
         public string GetAnnounce()
         {
             var txt = GetSource(Paths.LjUrl);
-            if (txt.Equals(null))
+            if (txt == null)
                 return string.Empty;
             var announcement = new GetAnnouncement(txt);
             return announcement.Text;
