@@ -7,10 +7,8 @@ namespace WeekChgkSPBParser.API
     /// <summary>
     /// Класс анонсов. Создаёт анонс в формате ТГ-поста.
     /// </summary>
-    internal class GetAnnouncement
+    internal class Announcement
     {
-        private DateOnly _today = DateOnly.FromDateTime(DateTime.Now);
-        
         /// <summary>
         /// Текст анонса в формате ТГ-поста
         /// </summary>
@@ -20,10 +18,9 @@ namespace WeekChgkSPBParser.API
         /// Создаёт анонс в формате ТГ-поста
         /// </summary>
         /// <param name="inputLines">Текст полного анонса, разбитый на строки</param>
-        internal GetAnnouncement(string[] inputLines)
+        internal Announcement(string[] inputLines)
         {
-            var today = DateOnly.FromDateTime(DateTime.Today);
-            var inputString = ClearOldInfo(inputLines, today);
+            var inputString = ClearOldInfo(inputLines);
             var match = Regex.Match(inputString, Patterns.CutAnnouncement, RegexOptions.Multiline);
             Text = match.Value.Equals(string.Empty) ? string.Empty : $"{ServiceLines.TgHead}\n\n{match.Value}";
         }
@@ -32,9 +29,8 @@ namespace WeekChgkSPBParser.API
         /// Убирает из анонса старую информацию
         /// </summary>
         /// <param name="lines">Текст анонса, разбитый на строки</param>
-        /// <param name="today">Объект DateOnly, указывающий на сегодняшний день</param>
         /// <returns>Текст анонса без старой информации</returns>
-        private static string ClearOldInfo(string[] lines, DateOnly today)
+        private string ClearOldInfo(string[] lines)
         {
             var ruCulture = new CultureInfo("ru-RU");
             List<string> clearLines = new(lines.Length) { "\n" };
@@ -48,7 +44,7 @@ namespace WeekChgkSPBParser.API
                     continue;
                 }
 
-                if (ShouldSkip(line, today, ruCulture))
+                if (ShouldSkip(line, ruCulture))
                     continue;
                 
                 tooOld = false;
@@ -62,10 +58,9 @@ namespace WeekChgkSPBParser.API
         /// Проверка на то, требуется ли пропустить строку
         /// </summary>
         /// <param name="line">Отдельная строка в анонсе</param>
-        /// <param name="today">Объект DateOnly, указывающий на сегодняшний день</param>
         /// <param name="ruCulture">Указание на русскую культуру для парсинга строки в DateOnly</param>
         /// <returns>Требуется ли пропустить строку</returns>
-        private static bool ShouldSkip(string line, DateOnly today, CultureInfo ruCulture)
+        private bool ShouldSkip(string line, CultureInfo ruCulture)
         {
             if (line.Length < 7) return true;
             
@@ -78,7 +73,7 @@ namespace WeekChgkSPBParser.API
                     result: out var date))
                 return true;
             
-            return date < today;
+            return date < DateOnly.FromDateTime(DateTime.Today);
         }
     }
 }

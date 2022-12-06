@@ -6,7 +6,7 @@ namespace WeekChgkSPBParser
     {
         static void Main(string[] args)
         {
-            if (FilesExist.Check())
+            if (Files.СheckExistence())
             {
                 Connect connect = new();
                 connect.Start();

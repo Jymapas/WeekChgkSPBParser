@@ -15,10 +15,10 @@ namespace WeekChgkSPBParser.Readers
         /// <returns>Текст анонса в формате ТГ-поста</returns>
         public string GetAnnounce()
         {
-            var txt = GetSource(Paths.LjUrl);
+            var txt = GetSource(Paths.LjUrl) ?? string.Empty;
             if (txt == null)
                 return string.Empty;
-            var announcement = new GetAnnouncement(txt);
+            var announcement = new Announcement(txt);
             return announcement.Text;
         }
         /// <summary>
