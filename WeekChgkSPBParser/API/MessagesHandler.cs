@@ -62,6 +62,7 @@ namespace WeekChgkSPBParser.API
         {
             Console.WriteLine(Newtonsoft.Json.JsonConvert.SerializeObject(exception));
         }
+        
         /// <summary>
         /// Отправка сообщений ботом
         /// </summary>
