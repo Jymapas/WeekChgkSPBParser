@@ -15,7 +15,7 @@ namespace WeekChgkSPBParser.Readers
         /// <returns>Текст анонса в формате ТГ-поста</returns>
         public string GetAnnounce()
         {
-            var txt = GetSource(Paths.LjUrl) ?? string.Empty;
+            var txt = GetSource(Paths.LjUrl);
             if (txt == null)
                 return string.Empty;
             var announcement = new Announcement(txt);
