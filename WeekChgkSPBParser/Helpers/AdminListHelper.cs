@@ -12,7 +12,7 @@ namespace WeekChgkSPBParser.Helpers
         public static List<long> GetIds(string path = Paths.AdminIds)
         {
             var allText = GetFromTxtHelper.GetFromTxt(path);
-            string[] splitLines = allText.Split(Environment.NewLine);
+            var splitLines = allText.Split(Environment.NewLine);
             List<long> ids = new(splitLines.Length);
             foreach (var line in splitLines)
             {
